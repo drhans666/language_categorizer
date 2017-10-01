@@ -5,11 +5,11 @@ import datetime
 def create_table():
     conn = sqlite3.connect('language_categorizer.db')
     c = conn.cursor()
-    c.execute('CREATE TABLE IF NOT EXISTS samples(id INTEGER PRIMARY KEY, datestamp TEXT, lang_code TEXT,'
-              ' lang_name TEXT, lang_text TEXT, link TEXT)')
+    c.execute('CREATE TABLE IF NOT EXISTS samples(id INTEGER PRIMARY KEY, datestamp TEXT, keywords TEXT,'
+              ' lang_code TEXT, lang_name TEXT, lang_text TEXT, link TEXT)')
 
 
-def data_entry(links, texts, lang_codes, lang_names):
+def data_entry(links, texts, lang_codes, lang_names, keys):
     conn = sqlite3.connect('language_categorizer.db')
     c = conn.cursor()
     # searches database for last cycle nr, so already named cycles wont be repeated
@@ -25,13 +25,14 @@ def data_entry(links, texts, lang_codes, lang_names):
     c.execute('BEGIN')
     for i in range(len(lang_names)):
         datestamp = str(datetime.datetime.now())
-        c.execute("INSERT INTO samples (id, datestamp, lang_code, lang_name, lang_text, link)"
-                  " VALUES (?, ?, ?, ?, ?, ?)",
-                  (id_nr, datestamp, lang_codes[i], lang_names[i], texts[i], links[i]))
+        c.execute("INSERT INTO samples (id, datestamp, keywords, lang_code, lang_name, lang_text, link)"
+                  " VALUES (?, ?, ?, ?, ?, ?, ?)",
+                  (id_nr, datestamp, keys[-1], lang_codes[i], lang_names[i], texts[i], links[i]))
         id_nr = id_nr + 1
     conn.commit()
     c.close()
     conn.close()
+
 
 # gets full language name based on language code
 def get_language_name(lang_code):
