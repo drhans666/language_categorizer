@@ -34,3 +34,4 @@ for i in range(len(english)):
 conn.commit()
 c.close()
 conn.close()
+print('Language codes uploaded to database')
