@@ -1,11 +1,11 @@
-import time
+import sqlite3
 import sys
+import time
 
 import bs4
 import requests
-import sqlite3
 
-from dbase import create_table, data_entry, get_language_name
+from database.dbase import create_table, data_entry, get_language_name
 
 
 # parses article links for text
@@ -64,7 +64,7 @@ def get_all_languages(keyword):
     return links, texts, lang_codes, lang_names, keys
 
 
-with open("keywords.txt") as file:
+with open("crawler/keywords.txt") as file:
     keywords = [line.strip() for line in file]
 create_table()
 for keyword in keywords:
