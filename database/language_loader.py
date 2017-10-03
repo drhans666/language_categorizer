@@ -4,7 +4,7 @@ import pandas
 
 # creates lists from csv columns
 colnames = ['alpha3b', 'alpha3t', 'alpha2', 'English', 'French']
-data = pandas.read_csv('language-codes-full.csv', names=colnames)
+data = pandas.read_csv('database/language-codes-full.csv', names=colnames)
 english = data.English.tolist()
 french = data.French.tolist()
 alpha3b = data.alpha3b.tolist()
@@ -19,7 +19,7 @@ alpha3t.pop(0)
 alpha2.pop(0)
 
 # populates database with data
-conn = sqlite3.connect('language_categorizer.db')
+conn = sqlite3.connect('database/language_categorizer.db')
 c = conn.cursor()
 c.execute('CREATE TABLE IF NOT EXISTS langs(id INTEGER PRIMARY KEY, alpha3b TEXT,'
           ' alpha3t TEXT, alpha2 TEXT, english TEXT, french TEXT)')
